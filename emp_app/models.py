@@ -21,8 +21,8 @@ from django.db import models
 class Employee(models.Model):
     first_name = models.CharField(max_length=100, null=False)
     last_name = models.CharField(max_length=100)
-    # cisco_id = models.CharField(max_length=100)
-    status = models.CharField(max_length=1000, default='0000000', null=True)
+    cisco_id = models.CharField(max_length=100, default='cisco_id', null=True)
+    status = models.CharField(max_length=1000, default='Status', null=True)
     # dept = models.ForeignKey(Department, on_delete=models.CASCADE)
     # salary = models.IntegerField(default=0)
     # bonus = models.IntegerField(default=0)
@@ -32,7 +32,7 @@ class Employee(models.Model):
 
 
     def __str__(self):
-        return "%s %s %s" %(self.first_name, self.last_name, self.status)
+        return "%s %s %s %s" %(self.first_name, self.last_name, self.cisco_id, self.status)
         # return "%s %s %s" %(self.first_name, self.last_name, self.phone)
 
 
