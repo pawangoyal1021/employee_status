@@ -3,6 +3,7 @@ from .models import Employee
 #Role, Department
 from datetime import datetime
 from django.db.models import Q
+from django.contrib.auth import authenticate, login
 
 
 # Create your views here.
@@ -22,7 +23,7 @@ def all_emp(request):
         'emps': emps
     }
     # print(context)
-    return render(request, 'view_all_emp.html', context)
+    return render(request, 'index.html', context)
 
 
 def add_emp(request):
@@ -73,17 +74,17 @@ def remove_emp(request, emp_id = 0):
 
 def filter_emp(request):
     if request.method == 'POST':
-        name = request.POST['name']
+        # name = request.POST['name']
         # status = request.POST['status']
-        # dept = request.POST['dept']
+        cisco_id = request.POST['cisco_id']
         # role = request.POST['role']
         emps = Employee.objects.all()
-        if name:
-            emps = emps.filter(Q(first_name__icontains = name) | Q(last_name__icontains = name))
+        # if name:
+        #     emps = emps.filter(Q(first_name__icontains = name) | Q(last_name__icontains = name))
         # if status:
         #     emps = emps.filter(status__icontains = status)
-        # if dept:
-        #     emps = emps.filter(dept__name__icontains = dept)
+        if cisco_id:
+            emps = emps.filter(cisco_id__icontains = cisco_id)
         # if role:
         #     emps = emps.filter(role__name__icontains = role)
 
@@ -128,3 +129,23 @@ def update(request, emp_id = 0):
     else:
         return HttpResponse("An Exception Occured! Employee Status Has Not Been Added")                                
 
+def user_login(request):
+    if request.method == 'POST':
+        # Process the request if posted data are available
+        username = request.POST['username']
+        # password = request.POST['password']
+        # Check username and password combination if correct
+        # user = authenticate(username=username, password=password)
+        user = authenticate(username=username)
+
+        if user is not None:
+            # Save session as cookie to login the user
+            login(request, user)
+            # Success, now let's login the user.
+            return render(request, 'index.html')
+        else:
+            # Incorrect credentials, let's throw an error to the screen.
+            return render(request, 'login.html', {'error_message': 'Incorrect username and / or password.'})
+    else:
+        # No post data availabe, let's just show the page to the user.
+        return render(request, 'login.html')

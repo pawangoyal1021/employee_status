@@ -15,15 +15,24 @@
     <div class="container">
       <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">STATUS MANAGEMENT SYSTEM</a>
+            <a class="navbar-brand" href="/"><h1>STATUS MANAGEMENT SYSTEM</h1></a>
+
+            <!-- Move the search bar within the same container and use ml-auto -->
+            <div class="ml-auto">
+              <form class="form-inline" action="/filter_emp" method="post">
+                {% csrf_token %}
+                  <input class="form-control mr-2" type="text" placeholder="Cisco ID" aria-label="Search" id="cisco_id" name="cisco_id" value="{{ cisco_id }}">
+                  <button class="btn btn-outline-light" type="submit">Search</button>
+              </form>
+            </div>
         </div>
-      </nav>
+    </nav>
             {% comment %} <h1>STATUS MANAGEMENT SYSTEM!</h1> {% endcomment %}
         <hr>
-        <a class="btn btn-primary" href="/all_emp" role="button"><i class="glyphicon glyphicon-home" style="font-size:25px;"></i></a>
+        <a class="btn btn-primary" href="/" role="button"><i class="glyphicon glyphicon-home" style="font-size:25px;"></i></a>
         <a class="btn btn-primary" href="/add_emp" role="button"><i class="fa fa-plus" style="font-size:25px;color:white"></i></a>
         {% comment %} <a class="btn btn-primary" href="/remove_emp" role="button">REMOVE STATUS</a> {% endcomment %}
-        <a class="btn btn-primary" href="/filter_emp" role="button"><i class="glyphicon glyphicon-search" style="font-size:25px;"></i></a>
+        {% comment %} <a class="btn btn-primary" href="/filter_emp" role="button"><i class="glyphicon glyphicon-search" style="font-size:25px;"></i></a> {% endcomment %}
         {% comment %} <a class="btn btn-primary" href="/update" role="button">UPDATE STATUS</a> {% endcomment %}
     </div>
   <div class="container">
