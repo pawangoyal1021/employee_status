@@ -4,15 +4,43 @@ from .models import Employee
 from datetime import datetime
 from django.db.models import Q
 from django.contrib.auth import authenticate, login
+import pyrebase
 
+config = {
+    "apiKey": "AIzaSyC-VN7N830eFUvN-3-S3cKAVmKfEBtDT6g",
+    "authDomain": "employeestatus-1c554.firebaseapp.com",
+    "databaseURL": "https://employeestatus-1c554-default-rtdb.firebaseio.com",
+    "projectId": "employeestatus-1c554",
+    "storageBucket": "employeestatus-1c554.appspot.com",
+    "messagingSenderId": "638021079022",
+    "appId": "1:638021079022:web:d20fbb9757c539261848ff",
+    # measurementId: "G-3PDC25PWF8"
+}
+
+firebase = pyrebase.initialize_app(config)
+authe = firebase.auth()
+database = firebase.database()
+
+def firebase_to_queryset(data):
+    employees = []
+    employee = Employee(
+        cisco_id=data.child('cisco_id').get().val(),
+        first_name=data.child('first_name').get().val(),
+        last_name=data.child('last_name').get().val(),
+        status=data.child('status').get().val(),
+    )
+    employees.append(employee)
+    return employees
 
 # Create your views here.
 def index(request):
     emps = Employee.objects.all()
+    # emps_val = database.child('employee')
+    # emps = firebase_to_queryset(emps_val)
+    # print(emps)
     context = {
         'emps': emps
     }
-    print(context)
     return render(request, 'index.html', context)
     # return render(request, 'index.html')
 
