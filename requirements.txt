@@ -89,7 +89,7 @@ wsproto==1.1.0
 # cffi=1.16.0
 # chardet=5.2.0
 # charset-normalizer=3.3.2
-cryptography=41.0.7
+# cryptography=41.0.7
 defusedxml=0.7.1
 Deprecated=1.2.14
 diff-match-patch=20230430
